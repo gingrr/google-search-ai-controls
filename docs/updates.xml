@@ -2,7 +2,7 @@
 <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
   <app appid="icagehidhponagfbgomjkdcbbkfcfcoc">
     <updatecheck
-      codebase="__PAGES_BASE_URL__/google-search-ai-controls.crx"
+      codebase="https://gingrr.github.io/google-search-ai-controls/google-search-ai-controls.crx"
       version="1.0.0" />
   </app>
 </gupdate>
