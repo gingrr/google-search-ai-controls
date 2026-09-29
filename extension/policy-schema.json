@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "hideAIOverview": {
+      "title": "Hide Google AI Overviews",
+      "description": "When true, hides Google AI Overview modules in standard Google Search results.",
+      "type": "boolean"
+    },
+    "blockAIMode": {
+      "title": "Block Google AI Mode",
+      "description": "When true, hides AI Mode entry points and redirects AI Mode URLs back to standard Google Search.",
+      "type": "boolean"
+    }
+  }
+}

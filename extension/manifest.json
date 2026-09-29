@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Google Search AI Controls",
+  "version": "1.0.0",
+  "description": "Managed controls for Google AI Overviews and AI Mode; useful in schools and other managed environments.",
+  "minimum_chrome_version": "121",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://www.google.com/*",
+    "https://google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "storage": {
+    "managed_schema": "policy-schema.json"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ai_mode_redirects",
+        "enabled": true,
+        "path": "rules-ai.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
