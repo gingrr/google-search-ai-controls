@@ -4,6 +4,7 @@
   "version": "1.0.1",
   "description": "Managed controls for Google AI Overviews and AI Mode; useful in schools and other managed environments.",
   "minimum_chrome_version": "121",
+  "update_url": "https://gingrr.github.io/google-search-ai-controls/updates.xml",
   "permissions": [
     "storage",
     "declarativeNetRequest"
