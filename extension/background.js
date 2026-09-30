@@ -1,34 +1,65 @@
 "use strict";
 
 const AI_MODE_RULESET = "ai_mode_redirects";
-const DEFAULT_BLOCK_AI_MODE = true;
+const WEB_MODE_RULESET = "force_web_mode";
 
-async function getBlockAIModeSetting() {
+const DEFAULTS = Object.freeze({
+  blockAIMode: true,
+  forceWebMode: false
+});
+
+async function getManagedSettings() {
   try {
-    const policy = await chrome.storage.managed.get(["blockAIMode"]);
-    return typeof policy.blockAIMode === "boolean"
-      ? policy.blockAIMode
-      : DEFAULT_BLOCK_AI_MODE;
+    const policy = await chrome.storage.managed.get([
+      "blockAIMode",
+      "forceWebMode"
+    ]);
+
+    return {
+      blockAIMode:
+        typeof policy.blockAIMode === "boolean"
+          ? policy.blockAIMode
+          : DEFAULTS.blockAIMode,
+      forceWebMode:
+        typeof policy.forceWebMode === "boolean"
+          ? policy.forceWebMode
+          : DEFAULTS.forceWebMode
+    };
   } catch (error) {
     console.warn(
-      "Google Search AI Controls: unable to read managed policy; using default.",
+      "Google Search AI Controls: unable to read managed policy; using defaults.",
       error
     );
-    return DEFAULT_BLOCK_AI_MODE;
+    return { ...DEFAULTS };
   }
 }
 
 async function applyManagedPolicy() {
-  const blockAIMode = await getBlockAIModeSetting();
+  const settings = await getManagedSettings();
+
+  const enableRulesetIds = [];
+  const disableRulesetIds = [];
+
+  if (settings.blockAIMode) {
+    enableRulesetIds.push(AI_MODE_RULESET);
+  } else {
+    disableRulesetIds.push(AI_MODE_RULESET);
+  }
+
+  if (settings.forceWebMode) {
+    enableRulesetIds.push(WEB_MODE_RULESET);
+  } else {
+    disableRulesetIds.push(WEB_MODE_RULESET);
+  }
 
   try {
     await chrome.declarativeNetRequest.updateEnabledRulesets({
-      enableRulesetIds: blockAIMode ? [AI_MODE_RULESET] : [],
-      disableRulesetIds: blockAIMode ? [] : [AI_MODE_RULESET]
+      enableRulesetIds,
+      disableRulesetIds
     });
   } catch (error) {
     console.error(
-      "Google Search AI Controls: unable to update AI Mode redirect rules.",
+      "Google Search AI Controls: unable to update declarative rulesets.",
       error
     );
   }
@@ -43,9 +74,13 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName !== "managed") {
+    return;
+  }
+
   if (
-    areaName === "managed" &&
-    Object.prototype.hasOwnProperty.call(changes, "blockAIMode")
+    Object.prototype.hasOwnProperty.call(changes, "blockAIMode") ||
+    Object.prototype.hasOwnProperty.call(changes, "forceWebMode")
   ) {
     void applyManagedPolicy();
   }

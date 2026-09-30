@@ -3,6 +3,6 @@
   <app appid="icagehidhponagfbgomjkdcbbkfcfcoc">
     <updatecheck
       codebase="https://gingrr.github.io/google-search-ai-controls/google-search-ai-controls.crx"
-      version="1.0.1" />
+      version="1.1.0" />
   </app>
 </gupdate>

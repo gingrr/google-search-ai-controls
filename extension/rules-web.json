@@ -1,0 +1,48 @@
+[
+  {
+    "id": 101,
+    "priority": 5,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "urlFilter": "||google.com/search*udm=",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 102,
+    "priority": 5,
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "urlFilter": "||google.com/search*tbm=",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 103,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "transform": {
+          "host": "www.google.com",
+          "queryTransform": {
+            "addOrReplaceParams": [
+              {
+                "key": "udm",
+                "value": "14"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "condition": {
+      "urlFilter": "||google.com/search?",
+      "resourceTypes": ["main_frame"]
+    }
+  }
+]

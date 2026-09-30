@@ -1,52 +1,44 @@
 [
   {
     "id": 1,
-    "priority": 1,
+    "priority": 10,
     "action": {
       "type": "redirect",
       "redirect": {
         "transform": {
           "queryTransform": {
-            "removeParams": [
-              "udm"
-            ]
+            "removeParams": ["udm"]
           }
         }
       }
     },
     "condition": {
-      "regexFilter": "^https://www\\.google\\.com/search\\?(?:[^#&]*&)*udm=50(?:&|#|$)",
-      "resourceTypes": [
-        "main_frame"
-      ]
+      "regexFilter": "^https://www\\.google\\.com/search\\?.*(?:^|[?&])udm=50(?:&|#|$)",
+      "resourceTypes": ["main_frame"]
     }
   },
   {
     "id": 2,
-    "priority": 1,
+    "priority": 10,
     "action": {
       "type": "redirect",
       "redirect": {
         "transform": {
           "host": "www.google.com",
           "queryTransform": {
-            "removeParams": [
-              "udm"
-            ]
+            "removeParams": ["udm"]
           }
         }
       }
     },
     "condition": {
-      "regexFilter": "^https://google\\.com/search\\?(?:[^#&]*&)*udm=50(?:&|#|$)",
-      "resourceTypes": [
-        "main_frame"
-      ]
+      "regexFilter": "^https://google\\.com/search\\?.*(?:^|[?&])udm=50(?:&|#|$)",
+      "resourceTypes": ["main_frame"]
     }
   },
   {
     "id": 3,
-    "priority": 1,
+    "priority": 10,
     "action": {
       "type": "redirect",
       "redirect": {
@@ -54,18 +46,14 @@
           "host": "www.google.com",
           "path": "/search",
           "queryTransform": {
-            "removeParams": [
-              "udm"
-            ]
+            "removeParams": ["udm"]
           }
         }
       }
     },
     "condition": {
       "regexFilter": "^https://(?:www\\.)?google\\.com/ai(?:[/?#]|$)",
-      "resourceTypes": [
-        "main_frame"
-      ]
+      "resourceTypes": ["main_frame"]
     }
   }
 ]
